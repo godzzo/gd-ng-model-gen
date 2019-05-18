@@ -1,1 +1,16 @@
-{"name":"gd-ng-model-gen","version":"1.0.0","description":"","main":"dist/index.js","scripts":{"test":"echo \"Error: no test specified\" && exit 1"},"keywords":[],"author":"","license":"ISC","types":"dist/index.d.ts"}
+{
+  "name": "gd-ng-model-gen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "google-spreadsheet-to-json": "^1.0.0"
+  }
+}
