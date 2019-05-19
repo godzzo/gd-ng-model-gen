@@ -1,0 +1,15 @@
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+
+@Entity()
+export class <%= table.camelName %> {
+	@PrimaryGeneratedColumn()
+	id: number;
+
+<% table.columns.forEach((column) => { %>
+
+	// <%= column.caption %>
+	@Column(<%= column.directiveSettings %>)
+	<%= column.lowerCamelName %>: <%= column.tsType %>;
+
+<% }); %>
+}

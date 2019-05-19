@@ -11,6 +11,8 @@
   "license": "ISC",
   "types": "dist/index.d.ts",
   "dependencies": {
+    "@types/ejs": "^2.6.3",
+    "ejs": "^2.6.1",
     "google-spreadsheet-to-json": "^1.0.0"
   }
 }
