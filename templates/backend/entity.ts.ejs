@@ -6,10 +6,12 @@ export class <%= table.camelName %> {
 	id: number;
 
 <% table.columns.forEach((column) => { %>
-
+	<% if (!column.type.startsWith('relation') 
+			&& column.name != 'id'
+		) { %>
 	// <%= column.caption %>
-	@Column(<%= column.directiveSettings %>)
+	@Column(<%- column.directiveSettings %>)
 	<%= column.lowerCamelName %>: <%= column.tsType %>;
-
+	<% } %>
 <% }); %>
 }

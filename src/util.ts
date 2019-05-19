@@ -20,7 +20,7 @@ export function SetNames(data: any): any {
 	});
 
 	data.lowerCamelName = arrLowerCamel.join('');
-	data.hypeName = arrHypen.join('-');
+	data.hyphenName = arrHypen.join('-');
 	data.periodName = arrHypen.join('.');
 	data.camelName = arrCapital.join('');
 

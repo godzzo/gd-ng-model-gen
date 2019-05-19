@@ -1,5 +1,3 @@
-
-
 import { renderFile } from "ejs";
 
 import util = require("util");
@@ -86,18 +84,18 @@ async function render(templatePath: string, model: any, outputPath: string) {
 function ParseWorkSheets(project: string, data: Array<any>) {
 	const meta = data.shift();
 
-	// Drop head row
-	meta.shift();
-
 	meta.forEach((table: any) => {
 		const columns = data[table.pos - 1];
 
 		SetNames(table);
 
-		// Drop head row
-		columns.shift();
-
 		columns.forEach(SetNames);
+
+		columns.forEach((column: any) => {
+
+			column.directiveSettings = SetColumnDirective(column);
+			column.tsType = column.type;
+		});
 
 		table.columns = columns;
 
@@ -105,6 +103,25 @@ function ParseWorkSheets(project: string, data: Array<any>) {
 
 		generate(project, {table});
 	});
+}
+
+function SetColumnDirective(column: any): string {
+	// {name: "first_name", type: "varchar", length: 200}
+	// {name: "last_update", type: "timestamp"}
+
+	const cfg: any = {};
+
+	cfg.name = column.name;
+
+	if (column.columnType) {
+		cfg.type = column.columnType
+	}
+
+	if (column.length) {
+		cfg.length = column.length
+	}
+
+	return JSON.stringify(cfg);
 }
 
 export const NgModelGen = (name: string) => 'Hello '+name;

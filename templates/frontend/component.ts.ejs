@@ -38,8 +38,6 @@ export class <%= table.camelName %>Component implements OnInit, OnDestroy
 		private _matSnackBar: MatSnackBar,
     )
     {
-		this.showHistory = false;
-		this.showResult = false;
         this.current = new <%= table.camelName %>();
         this._unsubscribeAll = new Subject();
     }
@@ -83,24 +81,20 @@ export class <%= table.camelName %>Component implements OnInit, OnDestroy
     createForm(): FormGroup
     {
         return this._formBuilder.group({
-            id : [this.current.id],
-			name : [this.current.name],
-			KID : [this.current.KID],
-            motherName : [this.current.motherName],
-			birthPlace : [this.current.birthPlace],
-			birthDate : [this.current.birthDate]
-        });
+		<% table.columns.forEach((column) => { %><% if (!column.type.startsWith('relation') ) { %>
+			<%= column.lowerCamelName %> : [this.current.<%= column.lowerCamelName %>],
+		<% } %><% }); %>});
     }
 
     saveRecord(): void {
-        const data = this.candidateForm.getRawValue();
+        const data = this.form.getRawValue();
 
         this._service.saveRecord(data)
             .then(() => {
 
                 this._service.onRecordChanged.next(data);
 
-                this._matSnackBar.open('Record saved', 'OK', {
+                this._matSnackBar.open('Mentés sikerült', 'OK', {
                     verticalPosition: 'top',
                     duration        : 2000
                 });
@@ -108,14 +102,14 @@ export class <%= table.camelName %>Component implements OnInit, OnDestroy
     }
 
     addRecord(): void {
-        const data = this.candidateForm.getRawValue();
+        const data = this.form.getRawValue();
 
         this._service.addRecord(data)
             .then(() => {
 
                 this._service.onRecordChanged.next(data);
 
-                this._matSnackBar.open('Record added', 'OK', {
+                this._matSnackBar.open('Létrehozás sikerült', 'OK', {
                     verticalPosition: 'top',
                     duration        : 2000
                 });
