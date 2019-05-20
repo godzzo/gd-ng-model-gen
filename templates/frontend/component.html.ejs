@@ -66,21 +66,13 @@
                                     <mat-icon class="m-0 mr-16 secondary-text">account_circle</mat-icon>
                                     <div class="h2 secondary-text">Adatok</div>
                                 </div>
-								
 								<% table.columns.forEach((column) => { %>
 									<% if (!column.type.startsWith('relation') 
-										&& column.name != 'id'
+										&& column.name != 'id' && column.edit
 										) { %>
-                                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                                    <mat-label> <%= column.caption %> </mat-label>
-                                    <input matInput placeholder="<%= column.caption %>"
-                                           name="<%= column.lowerCamelName %>"
-										   formControlName="<%= column.lowerCamelName %>"
-                                           required>
-                                </mat-form-field>
+<%- include('fields/'+column.edit+'.html.ejs', {column: column}); %>
 									<% } %>
 								<% }); %>
-
                             </div>
 
                         </mat-tab>
