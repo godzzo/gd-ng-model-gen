@@ -17,20 +17,35 @@ export class <%= table.camelName %>Service {
 	}
 
 	async find(filters: any) : Promise<<%= table.camelName %>[]> {
+		const cfg: any = this.prepareFilters(filters);
 
-		const cfg : any = { where: filters };
+		return await this.repository.find(cfg);
+	}
+
+	async findAndCount(filters: any) : Promise<[<%= table.camelName %>[], number]> {
+		const cfg: any = this.prepareFilters(filters);
+
+		return await this.repository.findAndCount(cfg);
+	}
+
+	private prepareFilters(filters: any): any {
+		const cfg: any = { where: filters };
 
 		if (filters.skip) {
 			cfg.skip = parseInt(filters.skip);
 		}
-
 		if (filters.take) {
 			cfg.take = parseInt(filters.take);
+		}
+		if (filters.order) {
+			cfg.order = {};
+
+			cfg.order[filters.order] = filters.orderDir? filters.orderDir.toUpperCase():  "ASC";
 		}
 
 		console.log(JSON.stringify(cfg));
 
-		return await this.repository.find(cfg);
+		return cfg;
 	}
 
 	async insert(params: any) : Promise<InsertResult> {

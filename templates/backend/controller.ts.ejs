@@ -26,6 +26,15 @@ export class <%= table.camelName %>Controller {
 		return items;
 	}
 
+	@Get("findAndCount")
+	async findAndCount(@Query() params): Promise<[<%= table.camelName %>[], number]> {
+		console.log(params);
+
+		const [items, count] = await this.service.findAndCount(params);
+		
+		return {items, count};
+	}
+
 	@Get('get/:id')
 	async get(@Param('id', new ParseIntPipe()) id): Promise<<%= table.camelName %>[]> {
 		console.log(id);
